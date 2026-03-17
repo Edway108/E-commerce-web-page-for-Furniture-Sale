@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            color: rgb(8, 0, 0);
+
+      
+            background-color: #f7f4f4;
+        
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            padding-top: 20px;
+        }
+
+        /* SEARCH BAR */
+        .search-bar {
+            background: red;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .search-bar input {
+            width: 350px;
+            padding: 8px;
+            border: none;
+            background: rgb(248, 246, 246);
+            color: rgb(3, 3, 3);
+        }
+
+        /* TABLE */
+        .table {
+            margin-top: 30px;
+            border: 1px solid #777;
+        }
+
+        .row {
+            display: flex;
+            border-bottom: 1px solid #777;
+        }
+
+        .cell {
+            padding: 15px;
+            border-right: 1px solid #777;
+            text-align: center;
+        }
+
+        .cell:last-child {
+            border-right: none;
+        }
+
+        .header {
+            background: #ebe8e8;
+        }
+
+        .product {
+            width: 35%;
+        }
+
+        .price {
+            width: 15%;
+        }
+
+        .quantity {
+            width: 15%;
+        }
+
+        .total {
+            width: 20%;
+        }
+
+        .action {
+            width: 15%;
+        }
+
+        .delete-btn {
+            background: #7a2d2d;
+            border: none;
+            color: rgb(12, 12, 12);
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        /* FOOTER */
+        .footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .total-box {
+            border: 1px solid #777;
+            padding: 15px 25px;
+        }
+
+        .buy-btn {
+            background: #ff6a3d;
+            border: none;
+            padding: 15px 30px;
+            cursor: pointer;
+            color: rgb(8, 8, 8);
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="search-bar">
+        <input type="text" placeholder="Search product...">
+    </div>
+
+    <div class="container">
+
+        <!-- TABLE HEADER -->
+        <div class="table">
+
+            <div class="row header">
+                <div class="cell product">Sản Phẩm</div>
+                <div class="cell price">Đơn Giá</div>
+                <div class="cell quantity">Số Lượng</div>
+                <div class="cell total">Số Tiền</div>
+                <div class="cell action">Thao Tác</div>
+            </div>
+
+            <!-- PRODUCT ROW -->
+            <div class="row">
+                <div class="cell product">Ghế tựa</div>
+                <div class="cell price">199.650đ</div>
+                <div class="cell quantity">- 1 +</div>
+                <div class="cell total">199.650đ</div>
+                <div class="cell action">
+                    <button class="delete-btn">Xóa</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+
+            <div class="total-box">
+                Tổng cộng: <b>199.650đ</b>
+            </div>
+
+            <button class="buy-btn">Mua Hàng</button>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

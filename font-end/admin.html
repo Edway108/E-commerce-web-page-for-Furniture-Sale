@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f8;
+            color: #333;
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            width: 900px;
+            margin: 40px auto;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            padding: 30px;
+            background: white;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .admin-name {
+            background: #3aa0d8;
+            color: white;
+            padding: 10px 40px;
+            border-radius: 5px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .change-btn {
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 6px 15px;
+            cursor: pointer;
+        }
+
+        .power-btn {
+            background: #ff9b42;
+            border-radius: 10px;
+            padding: 10px 15px;
+            color: white;
+        }
+
+        /* ITEM ROW */
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .image-box {
+            width: 60px;
+            height: 60px;
+            border: 1px solid #ccc;
+            background: #fafafa;
+        }
+
+        .product-box {
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 320px;
+            background: #fafafa;
+        }
+
+        .product-name {
+            border: 1px solid #ddd;
+            padding: 5px;
+            margin-bottom: 6px;
+            text-align: center;
+            background: white;
+        }
+
+        .price-qty {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .price {
+            border: 1px solid #ddd;
+            padding: 4px 10px;
+            background: white;
+        }
+
+        .qty {
+            border: 1px solid #ddd;
+            padding: 4px 15px;
+            background: white;
+        }
+
+        /* ACTIONS */
+        .actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .action-box {
+            border: 1px solid #ddd;
+            padding: 12px 20px;
+            font-size: 18px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .action-box:hover {
+            background: #f2f2f2;
+        }
+
+        /* ACCEPT BUTTON */
+        .accept-all {
+            margin-top: 30px;
+            float: right;
+            background: #4caf50;
+            color: white;
+            padding: 20px 35px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .accept-all:hover {
+            background: #43a047;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <div class="admin-name">ADMIN ABC</div>
+
+            <div class="header-right">
+                <button class="change-btn">Change</button>
+                <div class="power-btn">⏻</div>
+            </div>
+        </div>
+
+        <!-- ITEM -->
+        <div class="row">
+
+            <div class="image-box"></div>
+
+            <div class="product-box">
+                <div class="product-name">Furniture Name</div>
+
+                <div class="price-qty">
+                    <div class="price">100,000</div>
+                    <div class="qty">- 1 +</div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <div class="action-box">✔</div>
+                <div class="action-box">🗑</div>
+            </div>
+
+        </div>
+
+        <!-- ITEM -->
+        <div class="row">
+
+            <div class="image-box"></div>
+
+            <div class="product-box">
+                <div class="product-name">Furniture Name</div>
+
+                <div class="price-qty">
+                    <div class="price">100,000</div>
+                    <div class="qty">- 1 +</div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <div class="action-box">✔</div>
+                <div class="action-box">🗑</div>
+            </div>
+
+        </div>
+
+        <!-- ITEM -->
+        <div class="row">
+
+            <div class="image-box"></div>
+
+            <div class="product-box">
+                <div class="product-name">Furniture Name</div>
+
+                <div class="price-qty">
+                    <div class="price">100,000</div>
+                    <div class="qty">- 1 +</div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <div class="action-box">✔</div>
+                <div class="action-box">🗑</div>
+            </div>
+
+        </div>
+
+        <div class="accept-all">
+            ACCEPT ALL
+        </div>
+
+    </div>
+
+</body>
+
+</html>
