@@ -25,11 +25,17 @@ public class AuthController {
     // Register
     @PostMapping("/register")
     public String RegisterUser(@RequestBody User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
+        User dbUser = uRepo.findByUsername(user.getUsername());
+        if (dbUser == null) {
+            user.setPassword(encoder.encode(user.getPassword()));
 
-        uRepo.save(user);
+            uRepo.save(user);
 
-        return "User has been registered";
+            return ("User registered sucessfully");
+        } else {
+            return ("Username has already been registered");
+
+        }
     }
 
     // Login
@@ -42,7 +48,7 @@ public class AuthController {
             return "User not found .";
         }
         if (encoder.matches(user.getPassword(), dbUser.getPassword())) {
-            
+
             String token = JwtUtil.generateToken(user.getUsername());
 
             return token;
