@@ -14,6 +14,7 @@ public class Product {
 
     private String product_name;
     private double price;
+    private Long quantity;
     private String description;
     private String img;
 
@@ -58,4 +59,19 @@ public class Product {
     public void setImg(String img) {
         this.img = img;
     }
+
+    /**
+     * @return Long return the quantity
+     */
+    public Long getQuantity() {
+        return quantity;
+    }
+
+    /**
+     * @param quantity the quantity to set
+     */
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
+    }
+
 }
