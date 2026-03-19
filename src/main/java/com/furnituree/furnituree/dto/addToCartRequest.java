@@ -1,12 +1,10 @@
 package com.furnituree.furnituree.dto;
 
-import com.furnituree.furnituree.model.Product;
-
 public class addToCartRequest {
-    Product p;
-    private Long productId = p.getId();
-    private String productName = p.getProduct_name();
-    private Long productQuantity = p.getQuantity();
+
+    private Long productId;
+    private String productName;
+    private Long productQuantity;
 
     /**
      * @return Long return the productId

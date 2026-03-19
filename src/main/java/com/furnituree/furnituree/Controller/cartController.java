@@ -33,7 +33,7 @@ public class cartController {
 
     }
 
-    @PostMapping
+    @PostMapping("/addcart")
     public Cart addToCart(@RequestHeader("Authorization") String header, @RequestBody addToCartRequest req) {
 
         // 1.Find user name and connect it with the cart
@@ -56,6 +56,9 @@ public class cartController {
         Long productId = req.getProductId();
         Long productQuantity = req.getProductQuantity();
         Product product = proRepo.findById(productId).orElse(null);
+        if (product == null) {
+            throw new RuntimeException("Product not found");
+        }
 
         // make the cart item
         CartItem cartItem = caitemRepo.findByCartAndProduct(cart, product);
