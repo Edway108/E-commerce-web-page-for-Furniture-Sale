@@ -22,7 +22,7 @@ public class CartItem {
     @JoinColumn(name = "cartId")
     private Product product;
 
-    private int quantity;
+    private long quantity;
     private double price;
 
     /**
@@ -70,14 +70,14 @@ public class CartItem {
     /**
      * @return Long return the quantity
      */
-    public int getQuantity() {
+    public long getQuantity() {
         return quantity;
     }
 
     /**
      * @param quantity the quantity to set
      */
-    public void setQuantity(int quantity) {
+    public void setQuantity(long quantity) {
         this.quantity = quantity;
     }
 

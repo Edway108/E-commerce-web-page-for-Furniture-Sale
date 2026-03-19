@@ -52,6 +52,7 @@ public class product_controller {
         old.setPrice(product.getPrice());
         old.setDescription(product.getDescription());
         old.setImg(product.getImg());
+        old.setQuantity(product.getQuantity());
 
         return repo.save(old);
 
