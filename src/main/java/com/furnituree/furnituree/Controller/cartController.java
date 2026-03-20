@@ -1,5 +1,8 @@
 package com.furnituree.furnituree.Controller;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -36,6 +39,8 @@ public class cartController {
     @PostMapping("/addcart")
     public Cart addToCart(@RequestHeader("Authorization") String header, @RequestBody addToCartRequest req) {
 
+        // This section of code is responsible for adding a user's selected product to
+        // their cart. Here's a breakdown of what it does:
         // 1.Find user name and connect it with the cart
         // cut out "Bearer "
         String token = header.substring(7);
@@ -48,7 +53,9 @@ public class cartController {
         Cart cart = caRepo.findByUser(user);
         if (cart == null) {
             cart = new Cart();
+
             cart.setUser(user);
+
             caRepo.save(cart);
 
         }
@@ -75,6 +82,41 @@ public class cartController {
         caitemRepo.save(cartItem);
 
         return cart;
+    }
+
+    @GetMapping("/getcart")
+    public Cart getCart(@RequestHeader("Authorization") String header) {
+        // 1.Find user name and connect it with the cart
+        // cut out "Bearer "
+        String token = header.substring(7);
+        // "take username from tokpasswordEncoder"
+        String username = JwtUtil.extractUsername(token);
+
+        User user = usRepo.findByUsername(username);
+
+        // find if user have cart or not , if not make one , if does use that one
+        Cart cart = caRepo.findByUser(user);
+        return cart;
+
+    }
+
+    @DeleteMapping("/{cartId}")
+    public void deleteCart(@PathVariable Long cartId, @RequestHeader("Authorization") String header) {
+        // Extract username from token
+        String token = header.substring(7);
+        String username = JwtUtil.extractUsername(token);
+
+        User user = usRepo.findByUsername(username);
+        ;
+
+        // Find the cart by user and cartId
+        Cart cart = caRepo.findByUser(user);
+        if (cart == null || !cart.getCartId().equals(cartId)) {
+            throw new RuntimeException("Cart not found or unauthorized access");
+        }
+
+        // Delete the cart
+        caRepo.delete(cart);
     }
 
 }
