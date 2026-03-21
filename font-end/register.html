@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body style="background-color: rgb(157, 151, 244);">
 
     <div class="glass-box">
         <div class="container">
 
-            <h1>USER LOGIN</h1>
+            <h1>USER REGISTER</h1>
             <div class="section-title">Login to Your Account</div>
 
             <div class="form-group">
@@ -23,28 +23,39 @@
             <div class="form-group">
                 <label>Password</label>
                 <input type="password" id="password">
-                </div>
-            <button class="login-btn" onclick="login()">Login</button>
+            </div>
+            <div class="form-group">
+                <label>Re-enter Password</label>
+                <input type="password" id="repassword">
+            </div>
+
+            <button class="login-btn" onclick="register()">Register</button>
 
             <div class="links">
                 <a href="#">Forgot Password?</a>
             </div>
 
             <div class="links">
-                Don't have an account? <a href="register.html">Register</a>
+                Don't have an account? <a href="#">Register</a>
             </div>
 
         </div>
     </div>
     <script>
-        async function login() {
+        async function register() {
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
+            const repassword = document.getElementById("repassword").value;
+
+            if (password === repassword) {
+                console.log("Mật khẩu khớp");
+            } else {
+                console.log("Mật khẩu không khớp");
+            }
 
 
 
-
-            const res = await fetch("http://localhost:8080/auth/login", {
+            const res = await fetch("http://localhost:8080/auth/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -53,13 +64,16 @@
                     username: username,
                     password: password
                 })
-            })
-            const data = await res.text();
+            });
 
-            console.log("TOKEN:", data);
+            const data = await res.json();
 
-            localStorage.setItem("token", data);
-            alert("Login success");
+            if (!res.ok) {
+                alert(data.message);
+            } else {
+                alert("Successful register");
+                window.location ="login.html";
+            }
         }
     </script>
 

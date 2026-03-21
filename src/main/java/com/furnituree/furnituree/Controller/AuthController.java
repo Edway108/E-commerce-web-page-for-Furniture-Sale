@@ -1,5 +1,8 @@
 package com.furnituree.furnituree.Controller;
 
+import java.util.Map;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,17 +27,17 @@ public class AuthController {
 
     // Register
     @PostMapping("/register")
-    public String RegisterUser(@RequestBody User user) {
+    public ResponseEntity RegisterUser(@RequestBody User user) {
         User dbUser = uRepo.findByUsername(user.getUsername());
         if (dbUser == null) {
             user.setPassword(encoder.encode(user.getPassword()));
 
             uRepo.save(user);
 
-            return ("User registered sucessfully");
+            return ResponseEntity.ok(Map.of("message", "Username sucessfully register"));
         } else {
-            return ("Username has already been registered");
-
+            return ResponseEntity.badRequest().body(
+                    Map.of("message", "Username already exists"));
         }
     }
 
