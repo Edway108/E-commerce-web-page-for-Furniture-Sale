@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ public class AuthController {
     }
 
     // Register
+    @CrossOrigin(origins = "*")
     @PostMapping("/register")
     public ResponseEntity RegisterUser(@RequestBody User user) {
         User dbUser = uRepo.findByUsername(user.getUsername());

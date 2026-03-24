@@ -30,7 +30,7 @@ public class product_controller {
     }
 
     // Post the product up
-    @PostMapping
+    @PostMapping("/addproduct")
     public Product create(@RequestBody Product p) {
         return repo.save(p);
     }
