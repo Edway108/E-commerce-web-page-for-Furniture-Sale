@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>User Login</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="logo.png">
 </head>
 
 <body>
@@ -23,7 +24,7 @@
             <div class="form-group">
                 <label>Password</label>
                 <input type="password" id="password">
-                </div>
+            </div>
             <button class="login-btn" onclick="login()">Login</button>
 
             <div class="links">
@@ -37,32 +38,35 @@
         </div>
     </div>
     <script>
+        // Removed duplicate declaration of API_BASE
+
         async function login() {
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
 
+            try {
+                const res = await fetch(`http://localhost:8080/auth/login`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password }),
+                });
 
+                const data = await res.json();
 
-
-            const res = await fetch("http://localhost:8080/auth/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    username: username,
-                    password: password
-                })
-            })
-            const data = await res.text();
-
-            console.log("TOKEN:", data);
-
-            localStorage.setItem("token", data);
-            alert("Login success");
+                if (res.ok) {
+                    console.log("LOGIN OK:", data);
+                    localStorage.setItem("user", JSON.stringify({ username })); // Lưu user info
+                    window.location.href = "mainPage.html"; // Chuyển sang products
+                } else {
+                    alert(data.message || "Login failed");
+                }
+            } catch (error) {
+                alert("Network error: " + error.message);
+            }
         }
-    </script>
 
+
+    </script>
 </body>
 
 </html>

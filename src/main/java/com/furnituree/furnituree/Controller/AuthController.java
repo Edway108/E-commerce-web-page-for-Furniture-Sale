@@ -44,22 +44,23 @@ public class AuthController {
     }
 
     // Login
+    @CrossOrigin(origins = "http://127.0.0.1:5500", allowCredentials = "true")
     @PostMapping("/login")
-    public String LoginUser(@RequestBody User user) {
+    public ResponseEntity LoginUser(@RequestBody User user) {
 
         User dbUser = uRepo.findByUsername(user.getUsername());
 
         if (dbUser == null) {
-            return "User not found .";
+            return ResponseEntity.badRequest().body(Map.of("message", "Username not found"));
         }
         if (encoder.matches(user.getPassword(), dbUser.getPassword())) {
 
             String token = JwtUtil.generateToken(user.getUsername());
 
-            return token;
+            return ResponseEntity.ok(Map.of("message", token));
         }
 
-        return "Wrong Password";
+        return ResponseEntity.badRequest().body(Map.of("message", "Password is wrong"));
     }
 
 }

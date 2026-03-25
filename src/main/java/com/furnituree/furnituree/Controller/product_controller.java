@@ -2,6 +2,7 @@ package com.furnituree.furnituree.Controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.furnituree.furnituree.model.Product;
 import com.furnituree.furnituree.repo.product_repo;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/products")
 public class product_controller {
@@ -24,12 +26,14 @@ public class product_controller {
     }
 
     // Show all the products
+
     @GetMapping("/findall")
     public List<Product> getAll() {
         return repo.findAll();
     }
 
     // Post the product up
+
     @PostMapping("/addproduct")
     public Product create(@RequestBody Product p) {
         return repo.save(p);
@@ -41,7 +45,7 @@ public class product_controller {
         return repo.findById(id).orElse(null);
     }
 
-    // Update one product
+    // Update one product\
     @PutMapping("update/{id}")
     public Product UpdateProduct(@PathVariable Long id, @RequestBody Product product) {
         Product old = repo.findById(id).orElse(null);
@@ -60,7 +64,7 @@ public class product_controller {
 
     // delete one produc
     @DeleteMapping("/{id}")
-    public void delete(Long id) {
+    public void delete(@PathVariable Long id) {
         repo.deleteById(id);
     }
 
