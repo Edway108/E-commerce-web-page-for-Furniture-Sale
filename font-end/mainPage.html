@@ -19,7 +19,10 @@
             <div class="header-line"></div>
             <div class="header-sub">Product Catalog</div>
         </div>
-        <button class="btn-add" onclick="openAdd()">+ Add Product</button>
+        <div class="header-right">
+            <button class="btn-add" onclick="openAdd()">+ Add Product</button>
+            <button type="button" class="btn-add" onclick="logout()">Log out</button>
+        </div>
     </header>
 
     <!-- HERO -->
@@ -133,6 +136,9 @@
         let editId = null;
         let deleteId = null;
         let viewProduct = null;
+        function logout() {
+            window.location = "login.html";
+        }
 
         // 🔑 AUTH CHECK + TOKEN HANDLER
         async function checkAuth() {
