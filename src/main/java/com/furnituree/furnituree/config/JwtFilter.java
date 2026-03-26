@@ -24,7 +24,7 @@ public class JwtFilter extends OncePerRequestFilter {
         // take the header Authorization
         String header = req.getHeader("Authorization");
 
-        // Check dóe it have the Bearer
+        // Check does it have the Bearer
 
         if (header != null && header.startsWith("Bearer ")) {
 

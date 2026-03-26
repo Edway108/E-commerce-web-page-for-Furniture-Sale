@@ -55,6 +55,7 @@
                 if (res.ok) {
                     console.log("LOGIN OK:", data);
                     localStorage.setItem("token", data.token);
+                    localStorage.setItem("user", data.token);
                     window.location.href = "mainPage.html"; // Chuyển sang products
                 } else {
                     alert(data.message || "Login failed");

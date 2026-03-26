@@ -136,11 +136,8 @@
         let editId = null;
         let deleteId = null;
         let viewProduct = null;
-        function logout() {
-            window.location = "login.html";
-        }
 
-        // 🔑 AUTH CHECK + TOKEN HANDLER
+        //  AUTH CHECK + TOKEN HANDLER
         async function checkAuth() {
             const user = localStorage.getItem("user");
             if (!user) {
@@ -185,7 +182,15 @@
             }
         }
 
-        // Các function khác giữ nguyên...
+        function logout() {
+            localStorage.removeItem("user");
+            localStorage.clear;
+            window.location = "login.html";
+
+
+
+        }
+
         function renderGrid(products) {
             document.getElementById("productCount").textContent = products.length;
             const grid = document.getElementById("grid");

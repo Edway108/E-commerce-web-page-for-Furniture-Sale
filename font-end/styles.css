@@ -246,10 +246,10 @@ body {
 }
 
 .hero-count {
-    font-size: 11px;
+    font-size: 17px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--mist);
+    color: var(--clay);
     padding-bottom: 8px;
     text-align: right;
 }
