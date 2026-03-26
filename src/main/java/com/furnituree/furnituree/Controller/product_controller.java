@@ -46,7 +46,7 @@ public class product_controller {
     }
 
     // Update one product\
-    @PutMapping("update/{id}")
+    @PutMapping("/update/{id}")
     public Product UpdateProduct(@PathVariable Long id, @RequestBody Product product) {
         Product old = repo.findById(id).orElse(null);
 
@@ -62,7 +62,7 @@ public class product_controller {
 
     }
 
-    // delete one produc
+    // delete one product
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         repo.deleteById(id);

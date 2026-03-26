@@ -57,7 +57,7 @@ public class AuthController {
 
             String token = JwtUtil.generateToken(user.getUsername());
 
-            return ResponseEntity.ok(Map.of("message", token));
+            return ResponseEntity.ok(Map.of("token", token));
         }
 
         return ResponseEntity.badRequest().body(Map.of("message", "Password is wrong"));
