@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <title>User Register</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="icon" type="image/png" href="logo.png">\
+    <script src="register.js"></script>
+
+
 
 </head>
 
@@ -43,38 +46,7 @@
 
         </div>
     </div>
-    <script>
-        async function register() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-            const repassword = document.getElementById("repassword").value;
 
-            if (password === repassword) {
-                const res = await fetch("http://localhost:8080/auth/register", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        username: username,
-                        password: password
-                    })
-                });
-
-                const data = await res.json();
-
-                if (!res.ok) {
-                    alert(data.message);
-                } else {
-                    alert("Successful register");
-                    window.location = "login.html";
-                }
-            } else {
-                alert("Mật khẩu không khớp");
-            }
-
-        }
-    </script>
 
 </body>
 

@@ -171,6 +171,7 @@ body {
     align-items: center;
     gap: 20px;
 }
+
 .header-right {
     display: flex;
     align-items: right;
@@ -238,6 +239,30 @@ body {
     font-weight: 300;
     line-height: 1.05;
     color: var(--walnut);
+}
+
+.floating-box {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    background: #EAD7A1;
+    padding: 15px;
+    border-radius: 10px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #E6C97A;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
 }
 
 .hero h1 em {
@@ -656,6 +681,25 @@ body {
     align-items: center;
     justify-content: center;
     color: var(--mist);
+}
+
+/* CHAT MESSAGE STYLE */
+
+.message {
+    padding: 6px 0;
+    font-size: 14px;
+    color: var(--ink);
+}
+
+.message strong {
+    color: var(--walnut);
+}
+
+.join {
+    text-align: center;
+    font-size: 12px;
+    color: var(--mist);
+    margin: 8px 0;
 }
 
 .view-body {
