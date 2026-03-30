@@ -1,6 +1,16 @@
 let stompClient = null;
 let username = null;
-function connect() {
+async function checkAuth() {
+  const user = localStorage.getItem("user");
+  if (!user) {
+    alert("Please login first!");
+    window.location.href = "login.html";
+    return false;
+  }
+  return true;
+}
+async function connect() {
+  if (!(await checkAuth())) return;
   username = localStorage.getItem("username");
 
   const socket = new SockJS("http://127.0.0.1:8080/ws");

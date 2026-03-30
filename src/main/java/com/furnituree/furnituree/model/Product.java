@@ -13,8 +13,8 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String product_name;
+    @Column(unique = true, name = "product_name")
+    private String productName;
 
     private double price;
     private Long quantity;
@@ -32,11 +32,11 @@ public class Product {
     }
 
     public String getProduct_name() {
-        return product_name;
+        return productName;
     }
 
     public void setProduct_name(String product_name) {
-        this.product_name = product_name;
+        this.productName = product_name;
     }
 
     public double getPrice() {

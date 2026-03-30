@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.furnituree.furnituree.model.Product;
@@ -66,6 +67,13 @@ public class product_controller {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         repo.deleteById(id);
+    }
+
+    // find product by product_name
+    @CrossOrigin(origins = "*")
+    @GetMapping("/search")
+    public List<Product> search(@RequestParam String keyword) {
+        return repo.findByproductNameContaining(keyword);
     }
 
 }
