@@ -225,7 +225,7 @@ body {
 }
 
 /* HERO */
-.hero {
+.heroo {
     background: var(--parchment);
     border-bottom: 1px solid #d9cfc0;
     padding: 40px 48px;
@@ -234,7 +234,7 @@ body {
     justify-content: space-between;
 }
 
-.hero h1 {
+.heroo h1 {
     font-family: 'Cormorant Garamond', serif;
     font-size: 56px;
     font-weight: 300;
@@ -266,7 +266,7 @@ body {
     cursor: pointer;
 }
 
-.hero h1 em {
+.heroo h1 em {
     font-style: italic;
     color: var(--clay);
 }
@@ -833,4 +833,30 @@ body {
         transform: translateX(0);
         opacity: 1;
     }
+}
+
+.hero {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    position: relative;
+}
+
+.slides {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.slide {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.slide.active {
+    opacity: 1;
 }
