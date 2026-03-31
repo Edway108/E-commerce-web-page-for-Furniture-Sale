@@ -56,6 +56,10 @@ async function connect() {
     );
   });
 }
+
+async function reload() {
+  window.location.href = "mainPage.html";
+}
 function sendMessage() {
   const content = document.getElementById("messageInput").value;
   if (!content | (content.trim() === "")) {

@@ -29,6 +29,9 @@ async function openChat() {
   connect();
 }
 
+async function reload() {
+  window.location.href = "mainPage.html";
+}
 // ── FETCH ALL (với auth) ──────────────────────────────────────
 async function fetchAll() {
   if (!(await checkAuth())) return;
