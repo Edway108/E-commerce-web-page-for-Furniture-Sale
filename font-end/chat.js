@@ -1,5 +1,25 @@
 let stompClient = null;
 let username = null;
+let counter = 1;
+
+// to hide JOIN button
+function handleClick() {
+  if (counter > 0) {
+    counter--;
+    document.getElementById("btn-join").style.display = "none";
+    connect();
+  }
+}
+
+function sendMess() {
+  document.getElementById("btn-send").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      console.log("Message sent");
+      sendMessage();
+    }
+  });
+}
+
 async function checkAuth() {
   const user = localStorage.getItem("user");
   if (!user) {
@@ -11,6 +31,7 @@ async function checkAuth() {
 }
 async function connect() {
   if (!(await checkAuth())) return;
+
   username = localStorage.getItem("username");
 
   const socket = new SockJS("http://127.0.0.1:8080/ws");

@@ -246,7 +246,7 @@ body {
     bottom: 20px;
     right: 20px;
 
-    background: #EAD7A1;
+    background: var(--gold);
     padding: 15px;
     border-radius: 10px;
     position: fixed;
@@ -256,7 +256,7 @@ body {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: #E6C97A;
+    background: var(--gold);
 
     display: flex;
     justify-content: center;

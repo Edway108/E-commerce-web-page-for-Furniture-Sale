@@ -7,6 +7,8 @@ let editId = null;
 let deleteId = null;
 let viewProduct = null;
 let keyword = null;
+let stompClient = null;
+let username = null;
 
 //  AUTH CHECK + TOKEN HANDLER
 async function checkAuth() {
@@ -24,6 +26,7 @@ async function openChat() {
   if (!(await checkAuth())) return;
 
   window.location.href = "chatWebSocket.html";
+  connect();
 }
 
 // ── FETCH ALL (với auth) ──────────────────────────────────────
@@ -153,7 +156,7 @@ async function handleSave() {
     showToast("Operation failed", "error");
   }
 }
-//Seach
+//Seach in search Bar
 async function search() {
   document.getElementById("loadingState").style.display = "flex";
   document.getElementById("grid").innerHTML = "";
@@ -200,7 +203,7 @@ async function confirmDelete() {
   }
 }
 
-// Các function khác giữ nguyên (openAdd, openEdit, openView, etc...)
+//
 function openAdd() {
   editId = null;
   document.getElementById("fName").value = "";
