@@ -20,6 +20,12 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    private String role;
+
+    private int phonenumber;
+
+    private String address;
+
     // getter and setter
 
     public Long getUser_Id() {
@@ -46,6 +52,48 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
 
+    }
+
+    /**
+     * @return String return the role
+     */
+    public String getRole() {
+        return role;
+    }
+
+    /**
+     * @param role the role to set
+     */
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    /**
+     * @return int return the phonenumber
+     */
+    public int getPhonenumber() {
+        return phonenumber;
+    }
+
+    /**
+     * @param phonenumber the phonenumber to set
+     */
+    public void setPhonenumber(int phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+    /**
+     * @return String return the address
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * @param address the address to set
+     */
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 }
