@@ -11,9 +11,9 @@ function authHeaders(extra = {}) {
 
 function requireAdminAccess() {
   const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
+  const role = (localStorage.getItem("role") || "").toUpperCase();
 
-  if (!token || (role !== "admin" && role !== "manager")) {
+  if (!token || !["ADMIN", "MANAGER"].includes(role)) {
     alert("Please login as admin or manager");
     window.location.href = "login.html";
     return false;
@@ -62,6 +62,7 @@ function showSection(name) {
   if (name === "product-list") loadProducts();
   if (name === "category-list") loadCategories();
   if (name === "user-list") loadUsers();
+  if (name === "chat") connectAdminChat();
 }
 
 function injectModalStyles() {
@@ -1159,6 +1160,180 @@ async function openAddModal(type) {
   }
 }
 
+
+// === Customer-admin live chat ===
+const WS_ORIGIN = (window.location.port === "5500" || window.location.protocol === "file:") ? "http://localhost:8080" : "";
+let adminStompClient = null;
+let activeChatUser = null;
+let chatRooms = new Map();
+let chatSubscriptions = new Set();
+
+function connectAdminChat() {
+  if (adminStompClient && adminStompClient.connected) return;
+  if (typeof SockJS === "undefined" || typeof Stomp === "undefined") {
+    showAdminMessage("Chat libraries did not load. Please check internet connection.", "error");
+    return;
+  }
+
+  const socket = new SockJS(`${WS_ORIGIN}/ws`);
+  adminStompClient = Stomp.over(socket);
+  adminStompClient.debug = null;
+
+  adminStompClient.connect({}, () => {
+    adminStompClient.subscribe("/topic/admin/chat-notifications", (msg) => {
+      const n = JSON.parse(msg.body);
+      const roomId = n.roomId || n.sender;
+      addChatUser(roomId, n.sender, true);
+
+      // Keep the first customer message visible even before admin opens the room.
+      if (n.content && n.content !== `${n.sender} wants to chat`) {
+        const room = chatRooms.get(roomId);
+        const alreadyStored = room.messages.some((m) => m.sender === n.sender && m.content === n.content);
+        if (!alreadyStored) {
+          room.messages.push({ sender: n.sender, recipient: "admin", roomId, content: n.content, type: "CHAT" });
+        }
+      }
+
+      subscribeAdminRoom(roomId);
+      renderChatUserList();
+      updateChatBadge();
+      showToast(`${n.sender} sent a message`, "success");
+    });
+  }, () => {
+    showAdminMessage("Cannot connect to live chat. Please refresh and try again.", "error");
+  });
+}
+
+function addChatUser(roomId, username, unread = false) {
+  if (!roomId || !username) return;
+  if (!chatRooms.has(roomId)) chatRooms.set(roomId, { username, messages: [], unread: 0 });
+  const room = chatRooms.get(roomId);
+  room.username = username;
+  if (unread && activeChatUser !== roomId) room.unread += 1;
+  renderChatUserList();
+  updateChatBadge();
+}
+
+function subscribeAdminRoom(roomId) {
+  if (!roomId || !adminStompClient || !adminStompClient.connected || chatSubscriptions.has(roomId)) return;
+  adminStompClient.subscribe(`/topic/chat/${roomId}`, (msg) => {
+    const message = JSON.parse(msg.body);
+    if (message.type === "JOIN") return;
+
+    const current = chatRooms.get(roomId) || { username: roomId, messages: [], unread: 0 };
+    const duplicated = current.messages.some((m) => m.sender === message.sender && m.content === message.content && m.type === message.type);
+    if (!duplicated) current.messages.push(message);
+    if (activeChatUser !== roomId && message.sender !== (localStorage.getItem("username") || "admin")) current.unread += 1;
+    chatRooms.set(roomId, current);
+
+    renderAdminMessages();
+    renderChatUserList();
+    updateChatBadge();
+  });
+  chatSubscriptions.add(roomId);
+}
+
+function renderChatUserList() {
+  const list = document.getElementById("chatUserList");
+  if (!list) return;
+  const rooms = [...chatRooms.entries()];
+  if (!rooms.length) {
+    list.className = "chat-users-empty";
+    list.innerHTML = "No chat request yet.";
+    return;
+  }
+  list.className = "";
+  list.innerHTML = rooms
+    .map(([roomId, room]) => `<button class="chat-user-btn ${activeChatUser === roomId ? "active" : ""}" onclick="openAdminChat('${escapeJs(roomId)}')"><span>${escapeHtml(room.username)}</span>${room.unread ? `<b>${room.unread}</b>` : ""}</button>`)
+    .join("");
+}
+
+function openAdminChat(roomId) {
+  activeChatUser = roomId;
+  const room = chatRooms.get(roomId) || { username: roomId, messages: [], unread: 0 };
+  room.unread = 0;
+  chatRooms.set(roomId, room);
+
+  const title = document.getElementById("chatRoomTitle");
+  if (title) title.textContent = `Chat with ${room.username}`;
+
+  if (adminStompClient && adminStompClient.connected) subscribeAdminRoom(roomId);
+  else connectAdminChat();
+
+  renderAdminMessages();
+  renderChatUserList();
+  updateChatBadge();
+}
+
+function renderAdminMessages() {
+  const box = document.getElementById("adminMessages");
+  if (!box || !activeChatUser) return;
+  const room = chatRooms.get(activeChatUser);
+  const adminName = localStorage.getItem("username") || "admin";
+  box.innerHTML = (room?.messages || [])
+    .filter((m) => m.type !== "JOIN" && m.content)
+    .map((m) => `<div class="admin-msg ${m.sender === adminName ? "mine" : "theirs"}"><strong>${escapeHtml(m.sender || "user")}</strong><span>${escapeHtml(m.content || "")}</span></div>`)
+    .join("");
+  box.scrollTop = box.scrollHeight;
+}
+
+function sendAdminMessage() {
+  if (!activeChatUser) return alert("Select a user first");
+  const input = document.getElementById("adminChatInput");
+  const content = input.value.trim();
+  if (!content) return;
+
+  if (!adminStompClient || !adminStompClient.connected) {
+    connectAdminChat();
+    setTimeout(sendAdminMessage, 350);
+    return;
+  }
+
+  const message = {
+    sender: localStorage.getItem("username") || "admin",
+    recipient: activeChatUser,
+    roomId: activeChatUser,
+    content,
+    type: "CHAT"
+  };
+
+  adminStompClient.send("/app/chat.adminSend", {}, JSON.stringify(message));
+  const room = chatRooms.get(activeChatUser) || { username: activeChatUser, messages: [], unread: 0 };
+  room.messages.push(message);
+  chatRooms.set(activeChatUser, room);
+  input.value = "";
+  renderAdminMessages();
+}
+
+function updateChatBadge() {
+  const badge = document.getElementById("adminChatBadge");
+  if (!badge) return;
+  const total = [...chatRooms.values()].reduce((sum, room) => sum + room.unread, 0);
+  badge.textContent = total;
+  badge.style.display = total > 0 ? "inline-flex" : "none";
+}
+
+function showToast(msg, type = "success") {
+  const el = document.getElementById("toast");
+  if (!el) return showAdminMessage(msg, type);
+  el.textContent = msg;
+  el.className = `toast show ${type}`;
+  setTimeout(() => (el.className = "toast"), 3000);
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function escapeJs(value) {
+  return String(value ?? "").replaceAll("\\", "\\\\").replaceAll("'", "\\'");
+}
+
 function logout() {
   localStorage.clear();
   window.location = "login.html";
@@ -1166,5 +1341,6 @@ function logout() {
 
 window.onload = () => {
   if (!requireAdminAccess()) return;
+  connectAdminChat();
   showSection("dashboard");
 };

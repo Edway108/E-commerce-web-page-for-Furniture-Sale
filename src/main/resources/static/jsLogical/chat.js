@@ -1,100 +1,53 @@
+const API_ORIGIN = (window.location.port === "5500" || window.location.protocol === "file:") ? "http://localhost:8080" : "";
 let stompClient = null;
 let username = null;
-let counter = 1;
-
-// to hide JOIN button
-function handleClick() {
-  if (counter > 0) {
-    counter--;
-    document.getElementById("btn-join").style.display = "none";
-    connect();
-  }
-}
-
-function sendMess() {
-  document.getElementById("btn-send").addEventListener("keydown", function (e) {
-    if (e.key === "Enter") {
-      console.log("Message sent");
-      sendMessage();
-    }
-  });
-}
+let roomId = null;
 
 async function checkAuth() {
-  const user = localStorage.getItem("user");
-  if (!user) {
+  if (!localStorage.getItem("user") || !localStorage.getItem("token")) {
     alert("Please login first!");
     window.location.href = "login.html";
     return false;
   }
   return true;
 }
+
 async function connect() {
   if (!(await checkAuth())) return;
-  const token = localStorage.getItem("token") || "";
-
-  username = localStorage.getItem("username");
-
-  const socket = new SockJS("/ws");
+  username = localStorage.getItem("username") || "customer";
+  roomId = username;
+  const socket = new SockJS(`${API_ORIGIN}/ws`);
   stompClient = Stomp.over(socket);
-
+  stompClient.debug = null;
   stompClient.connect({}, function () {
-    console.log("Connected");
-
-    // subscribe đúng với backend của bạn
-    stompClient.subscribe("/topic/public", function (msg) {
-      showMessage(JSON.parse(msg.body));
-    });
-
-    // gửi JOIN
-    stompClient.send(
-      "/app/chat.join",
-      {},
-      JSON.stringify({
-        Authorization: `Bearer ${token}`,
-        sender: username,
-        type: "JOIN",
-      })
-    );
+    stompClient.subscribe(`/topic/chat/${roomId}`, function (msg) { showMessage(JSON.parse(msg.body)); });
+    stompClient.send("/app/chat.join", {}, JSON.stringify({ sender: username, roomId, type: "JOIN" }));
   });
 }
 
-async function reload() {
-  window.location.href = "mainPage.html";
-}
-function sendMessage() {
-  const content = document.getElementById("messageInput").value;
-  if (!content | (content.trim() === "")) {
-    alert("Input the message first");
-  } else {
-    stompClient.send(
-      "/app/chat.send",
-      {},
-      JSON.stringify({
-        sender: username,
-        content: content,
-        type: "CHAT",
-      })
-    );
+function reload() { window.location.href = "mainPage.html"; }
 
-    document.getElementById("messageInput").value = "";
-  }
+function sendMessage() {
+  const input = document.getElementById("messageInput");
+  const content = input.value.trim();
+  if (!content) return alert("Input the message first");
+  if (!stompClient || !stompClient.connected) return connect().then(() => setTimeout(sendMessage, 300));
+  stompClient.send("/app/chat.send", {}, JSON.stringify({ sender: username, recipient: "admin", roomId, content, type: "CHAT" }));
+  input.value = "";
 }
+
 function showMessage(message) {
   const messagesDiv = document.getElementById("messages");
-
   const div = document.createElement("div");
-
   if (message.type === "JOIN") {
-    div.classList.add("join");
+    div.className = "join";
     div.innerText = message.sender + " joined the chat";
   } else {
-    div.classList.add("message");
-    div.innerText = message.sender + ": " + message.content;
+    div.className = message.sender === username ? "message mine" : "message theirs";
+    div.innerHTML = `<strong>${message.sender}</strong><span>${message.content || ""}</span>`;
   }
-
   messagesDiv.appendChild(div);
-
-  // auto scroll xuống dưới
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
+
+document.addEventListener("DOMContentLoaded", connect);

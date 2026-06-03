@@ -21,7 +21,7 @@ async function login() {
       localStorage.setItem("role", data.role);
 
       role = localStorage.getItem("role");
-      if (role === "admin") {
+      if (["ADMIN", "MANAGER"].includes((role || "").toUpperCase())) {
         window.location.href = "adminPage.html";
       } else {
         window.location.href = "mainPage.html";
