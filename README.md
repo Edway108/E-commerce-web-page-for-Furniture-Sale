@@ -6,10 +6,10 @@ This project was built for the **Web Application Development** course.
 
 ## Team Members
 
+|
+
 | Nguyễn Phước Thịnh| Backend, database, authentication, order workflow, deployment |
-
 | Trần Lê Minh Quân | Frontend, UI/UX, product catalog, admin dashboard |
-
 | Nguyễn Phước Thịnh, Trần Lê Minh Quân  | Testing, documentation |
 
 
