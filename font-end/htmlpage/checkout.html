@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — Furnituree</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=DM+Sans&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style/base.css" />
+  <link rel="stylesheet" href="../style/checkout.css" />
+</head>
+
+<body>
+  <nav class="nav">
+    <a class="brand" href="home.html">Furnituree</a>
+    <div class="nav-links">
+      <a href="shop.html">SHOP</a>
+      <a href="cart.html">CART</a>
+      <a href="orders.html">MY ORDERS</a>
+      <button onclick="logout()">LOGOUT</button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <p class="eyebrow">SECURE CHECKOUT</p>
+    <h1>Checkout</h1>
+  </section>
+
+  <main class="checkout-layout">
+    <section class="checkout-card">
+      <h2>Shipping Information</h2>
+
+      <form id="checkoutForm">
+        <div class="form-row">
+          <label for="shippingName">Full name</label>
+          <input id="shippingName" type="text" placeholder="Nguyen Van A" required />
+        </div>
+
+        <div class="form-row">
+          <label for="shippingPhone">Phone number</label>
+          <input id="shippingPhone" type="tel" placeholder="0901234567" required />
+        </div>
+
+        <div class="form-row">
+          <label for="shippingAddress">Address</label>
+          <input id="shippingAddress" type="text" placeholder="123 Nguyen Trai" required />
+        </div>
+
+        <div class="form-row">
+          <label for="shippingCity">City</label>
+          <input id="shippingCity" type="text" placeholder="Ho Chi Minh" required />
+        </div>
+
+        <div class="form-row">
+          <label for="paymentMethod">Payment method</label>
+          <select id="paymentMethod" required>
+            <option value="COD">Cash on Delivery</option>
+            <option value="BANK_TRANSFER">Bank Transfer</option>
+            <option value="MOCK_CARD">Mock Card</option>
+          </select>
+        </div>
+
+        <button id="placeOrderBtn" type="submit" class="btn-primary">
+          PLACE ORDER
+        </button>
+
+        <p id="checkoutMessage" class="message"></p>
+      </form>
+    </section>
+
+    <aside class="summary-card">
+      <h2>Order Summary</h2>
+
+      <div id="cartItems" class="cart-items">
+        Loading cart...
+      </div>
+
+      <div class="summary-line">
+        <span>Subtotal</span>
+        <strong id="subtotal">$0.00</strong>
+      </div>
+
+      <div class="summary-line">
+        <span>Shipping</span>
+        <strong id="shipping">$50.00</strong>
+      </div>
+
+      <div class="summary-line total">
+        <span>Total</span>
+        <strong id="total">$0.00</strong>
+      </div>
+    </aside>
+  </main>
+
+  <script src="../jsLogical/checkout.js"></script>
+</body>
+</html>

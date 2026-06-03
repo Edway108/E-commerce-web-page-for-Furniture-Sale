@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Orders — Furnituree</title>
+  <link rel="stylesheet" href="../style/base.css" />
+  <link rel="stylesheet" href="../style/orders.css" />
+</head>
+<body>
+  <nav class="nav">
+    <a class="brand" href="mainPage.html">Furnituree</a>
+    <div class="nav-links">
+      <a href="mainPage.html">SHOP</a>
+      <a href="cart.html">CART</a>
+      <a href="orders.html">MY ORDERS</a>
+      <button onclick="logout()">LOGOUT</button>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <p>YOUR PURCHASES</p>
+    <h1>My Orders</h1>
+  </header>
+
+  <main class="container">
+    <section id="loadingState" class="state">Loading orders...</section>
+    <section id="emptyState" class="state" style="display:none;">No orders yet.</section>
+    <section id="ordersList" class="orders-list"></section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <script src="../jsLogical/orders.js"></script>
+</body>
+</html>

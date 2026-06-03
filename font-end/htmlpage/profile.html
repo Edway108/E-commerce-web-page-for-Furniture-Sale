@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Furnituree — Profile</title>
+    <link rel="icon" type="image/png" href="../style/logo.png">
+    <link rel="stylesheet" href="../style/base.css">
+    <link rel="stylesheet" href="../style/profile.css">
+</head>
+
+<body>
+    <header class="profile-header">
+        <div class="profile-logo" onclick="goHome()">Furni<span>turee</span></div>
+        <div class="profile-actions">
+            <button onclick="goHome()">Home</button>
+            <button onclick="logout()">Log out</button>
+        </div>
+    </header>
+
+    <main class="profile-shell">
+        <section class="profile-card">
+            <div class="profile-title-block">
+                <p>Account center</p>
+                <h1>My Profile</h1>
+            </div>
+
+            <div id="profileMessage" class="profile-message" style="display:none"></div>
+
+            <div class="profile-summary">
+                <div>
+                    <span class="summary-label">Username</span>
+                    <strong id="summaryUsername">-</strong>
+                </div>
+                <div>
+                    <span class="summary-label">Role</span>
+                    <strong id="summaryRole">-</strong>
+                </div>
+                <div>
+                    <span class="summary-label">Status</span>
+                    <strong id="summaryStatus">-</strong>
+                </div>
+            </div>
+
+            <div class="profile-grid">
+                <section class="profile-panel">
+                    <h2>Edit information</h2>
+                    <div class="field">
+                        <label for="username">Username</label>
+                        <input id="username" type="text" placeholder="Username" readonly />
+                    </div>
+                    <div class="field">
+                        <label for="phonenumber">Phone</label>
+                        <input id="phonenumber" type="number" placeholder="Phone number" />
+                    </div>
+                    <div class="field">
+                        <label for="address">Address</label>
+                        <textarea id="address" placeholder="Delivery address"></textarea>
+                    </div>
+                    <button class="primary-btn" onclick="updateProfile()">Save profile</button>
+                </section>
+
+                <section class="profile-panel">
+                    <h2>Change password</h2>
+                    <div class="field">
+                        <label for="currentPassword">Current password</label>
+                        <input id="currentPassword" type="password" placeholder="Current password" />
+                    </div>
+                    <div class="field">
+                        <label for="newPassword">New password</label>
+                        <input id="newPassword" type="password" placeholder="At least 6 characters" />
+                    </div>
+                    <div class="field">
+                        <label for="confirmPassword">Confirm password</label>
+                        <input id="confirmPassword" type="password" placeholder="Confirm new password" />
+                    </div>
+                    <button class="primary-btn" onclick="changePassword()">Change password</button>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <script src="../jsLogical/profile.js"></script>
+</body>
+
+</html>
