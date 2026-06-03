@@ -319,39 +319,51 @@ FAILED
 
 
 01-home-product-catalog
+
 <img width="946" height="494" alt="image" src="https://github.com/user-attachments/assets/e8f1bd07-c988-463c-b895-a14804b51f77" />
 
 02-search-filter-pagination
+
 <img width="758" height="348" alt="image" src="https://github.com/user-attachments/assets/ae43bee0-16fe-4e58-886a-a673dd03dea2" />
 
 03-product-detail
+
 <img width="312" height="374" alt="image" src="https://github.com/user-attachments/assets/54a65868-3286-4c4f-95c6-ba02453c55ba" />
 
 04-login-register
+
 <img width="481" height="275" alt="image" src="https://github.com/user-attachments/assets/d766967e-d84a-4f01-9be0-aff8f132d60b" />
 
 05-cart-page
+
 <img width="847" height="344" alt="image" src="https://github.com/user-attachments/assets/91ed3656-a5b5-40dd-8255-dad9917b6bcf" />
 
 06-checkout-page
+
 <img width="895" height="459" alt="image" src="https://github.com/user-attachments/assets/74668f92-f5d1-4085-89ac-3922065aed0e" />
 
 07-my-profile
+
 <img width="802" height="453" alt="image" src="https://github.com/user-attachments/assets/ce7d7eef-aad7-437e-99a9-d0271bafa0ce" />
 
 08-admin-dashboard
+
 <img width="936" height="502" alt="image" src="https://github.com/user-attachments/assets/ac6bb021-dd7b-46ab-bc4b-e15fdb9bc3ec" />
 
 09-admin-product-management
+
 <img width="916" height="437" alt="image" src="https://github.com/user-attachments/assets/73cf771a-48a2-4ed0-be29-c10a841ed84f" />
 
 10-admin-order-management
+
 <img width="886" height="395" alt="image" src="https://github.com/user-attachments/assets/df6d11eb-09ec-4bb5-a8e4-6af9224b57fc" />
 
 11-realtime-chat-user-admin
+
 <img width="791" height="408" alt="image" src="https://github.com/user-attachments/assets/33f9a5be-4f42-43ae-8630-0c0d621b64b2" />
 
 12-railway-deployment
+
 <img width="509" height="347" alt="image" src="https://github.com/user-attachments/assets/bf63f1d5-21b4-4f5b-a498-c433661959f1" />
 
 
